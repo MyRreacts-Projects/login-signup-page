@@ -26,7 +26,7 @@ const Login = ()=>{
         setErrorMessage('');
         try{await signInWithEmailAndPassword(auth,values.email,values.password);
              alert('login successfully')
-            // navigate('/home')
+             navigate('/home')
             
             // navigat home or etc
 
