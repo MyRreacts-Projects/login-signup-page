@@ -1,6 +1,7 @@
 // login.jsx 
+import  '../../styles/login.css';
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,Navigate, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 const Login = ()=>{
@@ -10,21 +11,36 @@ const Login = ()=>{
         password : ''
     })
     // errorMessage state 
-    const [errorMessage,setErrorMessage] = useState('')
+    const [errorMessage,setErrorMessage] = useState('');
+    // navigate if login successfully 
+    const navigate = useNavigate()
     // handleSubmission 
     const handleSubmission = async ()=>{
         console.log(values.email);
         console.log(values.password)
         if(!values.email || !values.password){
-            setErrorMessage('Fill all fields');
+            alert('Fill all input Fields')
+          
             return
         }
         setErrorMessage('');
         try{await signInWithEmailAndPassword(auth,values.email,values.password);
+             alert('login successfully')
+            // navigate('/home')
+            
             // navigat home or etc
+
+            // clear input  fields 
+            setValues({
+                email : '',
+                password : ''
+            })
         }
         catch(error){
             console.log(error.code,error.message)
+            
+            alert('Plz sign up first and use correct email and password')
+            navigate('/signup')
         }
     }
     return(
@@ -35,6 +51,8 @@ const Login = ()=>{
                 <div>
                     <label htmlFor="">Email:</label>
                     <input type="email" placeholder="Enter your email address"
+                    required
+                    value={values.email}
                     onChange={(event) =>
             setValues((prev) => ({
               ...prev,
@@ -46,6 +64,8 @@ const Login = ()=>{
                 <div>
                     <label htmlFor="">Password:</label>
                     <input type="password" placeholder="Enter your Password"
+                    required
+                    value={values.password}
                      onChange={(event) =>
             setValues((prev) => ({
               ...prev,

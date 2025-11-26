@@ -1,5 +1,6 @@
 // signup page 
 // login.jsx 
+import '../../styles/signup.css';
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -27,6 +28,7 @@ const SignUp = ()=>{
         }
         setErrorMessage('');
         try{await createUserWithEmailAndPassword(auth,values.email,values.password);
+            alert('sign up successfully')
            
             // navigat home or etc
             navigate('/')
@@ -39,6 +41,7 @@ const SignUp = ()=>{
         }
         catch(error){
             console.log(error.code,error.message)
+            alert('Enter valid email and password for signup')
         }
        
     }
