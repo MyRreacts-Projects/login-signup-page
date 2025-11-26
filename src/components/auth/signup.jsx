@@ -1,0 +1,93 @@
+// signup page 
+// login.jsx 
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
+import { Navigate } from "react-router-dom";
+const SignUp = ()=>{
+    // values getting state
+    const [values,setValues] = useState({
+        name : '',
+        email :'',
+        password : ''
+    })
+    // errorMessage state 
+    const [errorMessage,setErrorMessage] = useState('')
+    // navigate 
+    const navigate = useNavigate()
+    // handleSubmission 
+    const handleSubmission = async ()=>{
+        console.log(values.email);
+        console.log(values.password);
+        console.log(values.name)
+        if(!values.name ||!values.email || !values.password){
+            setErrorMessage('Fill all fields');
+            return
+        }
+        setErrorMessage('');
+        try{await createUserWithEmailAndPassword(auth,values.email,values.password);
+           
+            // navigat home or etc
+            navigate('/')
+            // clear all input fields 
+            setValues({
+                name :'',
+                email : '',
+                password: ''
+            })
+        }
+        catch(error){
+            console.log(error.code,error.message)
+        }
+       
+    }
+    return(
+        <>
+        <div className="container">
+            <div className="subcontainer">
+                <h1>Sign Up Page</h1>
+                <div>
+                    <label htmlFor="">Name:</label>
+                    <input type="name" placeholder="Enter your name"
+                    value={values.name}
+                    onChange={(event) =>
+            setValues((prev) => ({
+              ...prev,
+              name: event.target.value,
+            }))
+          }/>
+
+                </div>
+                 <div>
+                    <label htmlFor="">Email:</label>
+                    <input type="email" placeholder="Enter your email address"
+                    value={values.email}
+                    onChange={(event) =>
+            setValues((prev) => ({
+              ...prev,
+              email: event.target.value,
+            }))
+          }/>
+
+                </div>
+                <div>
+                    <label htmlFor="">Password:</label>
+                    <input type="password" placeholder="Enter your Password"
+                    value={values.password}
+                     onChange={(event) =>
+            setValues((prev) => ({
+              ...prev,
+              password: event.target.value,
+            }))
+          } />
+                </div>
+                <div>{errorMessage}</div>
+                <div><button onClick={handleSubmission}>SignUp</button></div>
+                <div><p>Already Have an Account?<span><Link to='/'>LogIn</Link></span></p></div>
+            </div>
+        </div>
+        </>
+    )
+}
+export default SignUp;
