@@ -55,11 +55,10 @@ const Login = ()=>{
                     <input type="email" placeholder="Enter your email address"
                     required
                     value={values.email}
-                    onChange={(event) =>
-            setValues((prev) => ({
-              ...prev,
-              email: event.target.value,
-            }))
+                    onChange={(e) =>
+            setValues(
+             {...values, email: e.target.value}
+           )
           }/>
 
                 </div>
@@ -68,11 +67,10 @@ const Login = ()=>{
                     <input type="password" placeholder="Enter your Password"
                     required
                     value={values.password}
-                     onChange={(event) =>
-            setValues((prev) => ({
-              ...prev,
-              password: event.target.value,
-            }))
+                     onChange={(e) =>
+            setValues(
+                {...values , password: e.target.value}
+          )
           } />
                 </div>
                 <div>{errorMessage}</div>

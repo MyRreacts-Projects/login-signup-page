@@ -32,8 +32,11 @@ const SignUp = ()=>{
             // create user in auth
             const res = await createUserWithEmailAndPassword(auth,values.email,values.password);
             // create uid and stroe extra data in firestore
+            
             const user = res.user;
+           
             const uid = user.uid;
+         
 
             await setDoc(doc(db,'users',uid),{
                 name : values.name,
@@ -70,11 +73,10 @@ const SignUp = ()=>{
                     <label htmlFor="">Name:</label>
                     <input type="name" placeholder="Enter your name"
                     value={values.name}
-                    onChange={(event) =>
-            setValues((prev) => ({
-              ...prev,
-              name: event.target.value,
-            }))
+                    onChange={(e) =>
+            setValues({...values,name: e.target.value}
+             
+            )
           }/>
 
                 </div>
@@ -82,11 +84,10 @@ const SignUp = ()=>{
                     <label htmlFor="">Email:</label>
                     <input type="email" placeholder="Enter your email address"
                     value={values.email}
-                    onChange={(event) =>
-            setValues((prev) => ({
-              ...prev,
-              email: event.target.value,
-            }))
+                    onChange={(e) =>
+            setValues(
+                {...values,email: e.target.value}
+              )
           }/>
 
                 </div>
@@ -94,11 +95,10 @@ const SignUp = ()=>{
                     <label htmlFor="">Password:</label>
                     <input type="password" placeholder="Enter your Password"
                     value={values.password}
-                     onChange={(event) =>
-            setValues((prev) => ({
-              ...prev,
-              password: event.target.value,
-            }))
+                     onChange={(e) =>
+            setValues(
+                {...values,password : e.target.value}
+        )
           } />
                 </div>
                 <div>{errorMessage}</div>
@@ -110,3 +110,6 @@ const SignUp = ()=>{
     )
 }
 export default SignUp;
+
+
+
