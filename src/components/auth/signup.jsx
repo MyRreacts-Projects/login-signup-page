@@ -4,8 +4,9 @@ import '../../styles/signup.css';
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase";
+import { auth,db } from "../../firebase/firebase";
 import { Navigate } from "react-router-dom";
+import { doc,setDoc } from 'firebase/firestore';
 const SignUp = ()=>{
     // values getting state
     const [values,setValues] = useState({
@@ -27,7 +28,22 @@ const SignUp = ()=>{
             return
         }
         setErrorMessage('');
-        try{await createUserWithEmailAndPassword(auth,values.email,values.password);
+        try{
+            // create user in auth
+            const res = await createUserWithEmailAndPassword(auth,values.email,values.password);
+            // create uid and stroe extra data in firestore
+            const user = res.user;
+            const uid = user.uid;
+
+            await setDoc(doc(db,'users',uid),{
+                name : values.name,
+                email : values.email,
+                createdAt : new Date()
+
+            })
+
+            
+           
             alert('sign up successfully')
            
             // navigat home or etc

@@ -11,7 +11,7 @@ const Home = () => {
         signOut(auth)
         .then((res)=>{
             alert('log out successfully')
-            navigate('/signup')
+            navigate('/')
         })
         .catch((error)=>{console.log(error.code,error.message)})
     }

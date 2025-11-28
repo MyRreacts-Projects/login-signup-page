@@ -3,7 +3,9 @@ import  '../../styles/login.css';
 import React, { useState } from "react";
 import { Link,Navigate, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/firebase";
+import { auth} from "../../firebase/firebase";
+
+
 const Login = ()=>{
     // values getting state
     const [values,setValues] = useState({
